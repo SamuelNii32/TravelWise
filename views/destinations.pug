@@ -1,0 +1,107 @@
+extends layout
+
+block content
+  .destinations-page
+    .container
+      // Header Section
+      .destinations-header
+        h1.page-title Popular Destinations
+        p.page-description Discover amazing destinations around the world, carefully curated for every budget and travel style.
+
+      // Destinations Grid
+      .destinations-grid
+        each destination in destinations
+          .destination-card
+            .card-header
+              .destination-info
+                .flag-and-title
+                  span.destination-flag= destination.flag
+                  .title-group
+                    h3.destination-name= destination.name
+                    p.destination-country= destination.country
+                .popularity-badge #{destination.matchScore}% popular
+
+            .card-content
+              // Description
+              p.destination-description= destination.description
+
+              // Weather & Currency
+              .weather-currency-row
+                .weather-info
+                  i.fa-solid.fa-thermometer-half
+                  span.weather-icon= destination.weather === 'sunny' ? '☀️' : destination.weather === 'cloudy' ? '☁️' : '⛅'
+                  span.temperature #{destination.temperature}°C
+                .currency-info
+                  i.fa-solid.fa-dollar-sign
+                  span.currency= destination.currency
+
+              // Best Time to Visit
+              .best-time-section
+                .best-time-header
+                  i.fa-solid.fa-calendar
+                  span Best Time to Visit
+                p.best-time-text= destination.bestTimeToVisit
+
+              // Popular Activities
+              .activities-section
+                h4.activities-title Popular Activities:
+                .activities-badges
+                  each activity in destination.popularActivities.slice(0, 3)
+                    span.activity-badge= activity
+
+              // Map Preview
+              .map-preview(onclick=`showLocationToast('${destination.name}', ${destination.coordinates.lat}, ${destination.coordinates.lng})`)
+                .map-gradient
+                .map-pin
+                  i.fa-solid.fa-map-pin
+                .coordinates #{destination.coordinates.lat.toFixed(2)}, #{destination.coordinates.lng.toFixed(2)}
+
+              // Action Buttons
+              .card-actions
+                button.btn-details(onclick=`window.location.href='/destination/${destination.id}'`) View Details
+                button.btn-favorite(onclick=`toggleFavorite('${destination.id}')`)
+                  span.heart-icon ♥
+
+      // Call to Action Section
+      .cta-section
+        .cta-content
+          h2.cta-title Can't Find What You're Looking For?
+          p.cta-description Use our AI-powered trip planner to discover personalized destinations based on your budget and interests.
+          button.cta-button(onclick="window.location.href='/'")
+            i.fa-solid.fa-calendar
+            | Get Started
+
+  // JavaScript for Destinations Page
+  script.
+    const destinations = !{JSON.stringify(destinations)};
+    
+    // Weather icon function
+    function getWeatherIcon(weather) {
+      const icons = {
+        'sunny': '☀️',
+        'cloudy': '☁️',
+        'partly-cloudy': '⛅',
+        'rainy': '🌧️',
+        'clear': '☀️'
+      };
+      return icons[weather] || '☀️';
+    }
+    
+    // Show location toast
+    function showLocationToast(name, lat, lng) {
+      alert(`${name} is located at ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+    }
+    
+    // Toggle favorite
+    function toggleFavorite(destinationId) {
+      const btn = event.target.closest('.btn-favorite');
+      const icon = btn.querySelector('.heart-icon');
+      
+      if (btn.classList.contains('favorited')) {
+        btn.classList.remove('favorited');
+        icon.textContent = '♥';
+      } else {
+        btn.classList.add('favorited');
+        icon.textContent = '✓';
+      }
+    }

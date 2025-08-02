@@ -1,0 +1,90 @@
+extends layout
+
+block content
+  .about-page
+    .container
+      // Hero Section
+      .about-hero
+        h1.page-title About TravelWise
+        p.page-description We're on a mission to make travel planning smarter, more affordable, and more connected than ever before.
+
+      // Mission Section
+      .mission-section
+        .mission-content
+          .mission-text
+            h2.section-title Our Mission
+            p.mission-paragraph At TravelWise, we believe that everyone deserves to explore the world, regardless of their budget. Our AI-powered platform helps travelers discover amazing destinations that match their interests, budget, and travel style.
+            p.mission-paragraph We're not just about finding cheap flights or hotels – we're about creating meaningful travel experiences that enrich your life while staying within your means.
+          
+          .vision-card
+            .vision-icon
+              i.fa-solid.fa-bullseye
+            h3.vision-title Our Vision
+            p.vision-text To become the world's most trusted travel companion, connecting millions of travelers with their perfect destinations and travel companions.
+
+      // Features Grid
+      .features-section
+        .feature-card
+          .feature-icon.budget
+            i.fa-solid.fa-dollar-sign
+          h3.feature-title Budget-Smart Planning
+          p.feature-text Our AI analyzes thousands of destinations to find the perfect match for your budget, ensuring you get maximum value for every dollar spent.
+        
+        .feature-card
+          .feature-icon.social
+            i.fa-solid.fa-users
+          h3.feature-title Social Travel
+          p.feature-text Connect with like-minded travelers, share experiences, and find travel companions who share your interests and travel style.
+        
+        .feature-card
+          .feature-icon.personalized
+            i.fa-solid.fa-heart
+          h3.feature-title Personalized Experience
+          p.feature-text Every recommendation is tailored to your unique preferences, interests, and travel goals, making each trip truly personal.
+
+      // Stats Section
+      .stats-section
+        h2.stats-title TravelWise by the Numbers
+        .stats-grid
+          .stat-item
+            .stat-number.blue 50K+
+            .stat-label Happy Travelers
+          .stat-item
+            .stat-number.green 200+
+            .stat-label Destinations
+          .stat-item
+            .stat-number.purple $2M+
+            .stat-label Money Saved
+          .stat-item
+            .stat-number.orange 4.9★
+            .stat-label User Rating
+
+      // Values Section
+      .values-section
+        h2.values-title Our Values
+        .values-grid
+          .value-card
+            .value-icon.trust
+              i.fa-solid.fa-shield-halved
+            h3.value-title Trust & Safety
+            p.value-text We prioritize the safety and security of our travelers with verified companions and trusted recommendations.
+          
+          .value-card
+            .value-icon.excellence
+              i.fa-solid.fa-award
+            h3.value-title Excellence
+            p.value-text We strive for excellence in every aspect of our service, from AI recommendations to customer support.
+          
+          .value-card
+            .value-icon.innovation
+              i.fa-solid.fa-clock
+            h3.value-title Innovation
+            p.value-text We continuously innovate to provide cutting-edge travel planning tools and experiences.
+
+      // CTA Section
+      .about-cta
+        h2.cta-title Ready to Start Your Journey?
+        p.cta-subtitle Join thousands of travelers who have discovered their perfect destinations with TravelWise.
+        button.cta-button(onclick="window.location.href='/'")
+          | Get Started
+          img.plane-icon(src="/images/plane-icon.png", alt="Plane")

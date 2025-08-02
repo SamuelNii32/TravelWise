@@ -1,0 +1,105 @@
+extends layout
+
+block content
+  //- Hero Section
+  section.hero-section
+    .overlay
+    .container
+      .logo-title
+        i.icon-plane
+        h1 TravelWise
+      h2.hero-heading Plan Your Perfect Trip Within Budget
+      p.hero-subtext
+        | Discover amazing destinations tailored to your budget, interests, and travel style. Let AI help you plan
+        | the adventure of a lifetime.
+      button.get-started-button(onclick="handleScrollToForm()")
+        | Get Started
+        i.icon-heart
+
+  //- Planning Form Section
+  section#planning-form.planning-form
+    .container
+      .form-wrapper
+        .card
+          .card-header
+            h3.card-title Tell Us About Your Dream Trip
+            p.card-subtext We'll find the perfect destinations for you
+          .card-content
+            form(method="POST", action="/plan-trip")
+              // Budget
+              .form-group
+                label(for="budget") Travel Budget (USD) *
+                input#budget(type="number", name="budget", placeholder="e.g., 2000", required)
+
+              // Region
+              .form-group
+                label(for="region") Preferred Region *
+                select#region(name="region", required)
+                  option(value="") Select a region
+                  option(value="Europe") Europe
+                  option(value="Asia") Asia
+                  option(value="Africa") Africa
+                  option(value="North America") North America
+                  option(value="South America") South America
+                  option(value="Australia") Australia
+
+              // Travel Month
+              .form-group
+                label(for="month") Travel Month *
+                select#month(name="month", required)
+                  option(value="") Select travel month
+                  each month in ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+                    option(value=month)= month
+
+              // Interests
+              .form-group
+                label Your Interests *
+                .interest-badges
+                  each interest in ['Beach', 'Mountains', 'Culture', 'Adventure', 'Nightlife', 'Nature']
+                    span.badge(data-interest=interest)= interest
+                input#interests(type="hidden", name="interests", value="")
+                p.helper-text Select at least one interest
+
+              // Travel Mode
+              .form-group
+                label Travel Mode *
+                .radio-group
+                  label.radio
+                    input(type="radio", name="travelMode", value="solo", required)
+                    | Solo Travel
+                  label.radio
+                    input(type="radio", name="travelMode", value="companion")
+                    | Find Companion
+
+              button(type="submit").submit-btn
+                i.icon-calendar
+                | Find My Perfect Destinations
+
+  //- Why Choose Section
+  section.why-choose
+    .why-container
+      .why-header
+        h3 Why Choose TravelWise?
+        p Our AI-powered platform helps you discover destinations that match your budget, interests, and travel style.
+
+      .why-grid
+        //- Budget-Friendly
+        .why-item(onclick="toast({ title: 'Budget-Friendly Planning', description: 'Our smart algorithms find destinations that maximize your travel experience within your budget.' })")
+          .why-icon.bg-blue
+             i.fas.fa-dollar-sign
+          h4 Budget-Friendly
+          p Find amazing destinations that fit your budget perfectly
+
+        //- Personalized
+        .why-item(onclick="toast({ title: 'Personalized Recommendations', description: 'Get destination suggestions tailored to your unique interests and travel preferences.' })")
+          .why-icon.bg-green
+            i.fas.fa-heart
+          h4 Personalized
+          p Recommendations based on your interests and preferences
+
+        //- Social
+        .why-item(onclick="toast({ title: 'Social Travel Features', description: 'Connect with like-minded travelers or plan the perfect solo adventure.' })")
+          .why-icon.bg-purple
+            i.fas.fa-users
+          h4 Social
+          p Connect with fellow travelers or plan solo adventures

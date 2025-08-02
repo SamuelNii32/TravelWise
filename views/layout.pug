@@ -1,0 +1,107 @@
+doctype html
+html
+  head
+    title TravelWise
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="icon", type="image/x-icon", href="/images/favicon.ico")
+    link(rel="icon", type="image/png", sizes="32x32", href="/images/favicon-32x32.png")
+    link(rel="icon", type="image/png", sizes="16x16", href="/images/favicon-16x16.png")
+    link(rel="stylesheet", href="/css/main.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css")
+    script(src="https://cdn.jsdelivr.net/npm/chart.js")
+
+
+  body
+    header
+      .container
+        .top-bar
+          // Left section: logo
+          .left-section
+            a(href="/", class="logo")
+              img(src="/images/plane-icon.png", alt="Plane")
+              span TravelWise
+
+          // Middle: navigation links (desktop)
+          nav.desktop-nav
+            a(href="/") Home
+            a(href="/destinations") Destinations
+            a(href="/about") About
+
+          // Right section: sign in and get started
+          .right-section
+            a(href="/signin") Sign In
+            a(href="/plan", class="get-started") Get Started
+
+          // Mobile menu button
+          button(type="button", class="mobile-menu", onclick="toggleMobileMenu()") ☰
+
+        // Mobile navigation (hidden by default)
+        nav.mobile-nav
+          a(href="/") Home
+          a(href="/destinations") Destinations
+          a(href="/about") About
+          a(href="/signin") Sign In
+          a(href="/plan", class="get-started") Get Started
+
+    // Page-specific content
+    block content
+
+    // Footer
+    footer.footer
+      .footer-container
+        .footer-grid
+          // Company Info
+          .footer-company
+            .logo
+              img(src="/images/plane-icon.png", alt="Plane Logo")
+              span TravelWise
+            p.description Your AI-powered travel companion for discovering amazing destinations within your budget.
+            .social-icons
+              a(href="#", title="Facebook")
+                i.fab.fa-facebook-f
+              a(href="#", title="Twitter")
+                i.fab.fa-twitter
+              a(href="#", title="Instagram")
+                i.fab.fa-instagram
+
+          // Quick Links
+          .footer-links
+            h3 Quick Links
+            ul
+              li: a(href="/") Home
+              li: a(href="/destinations") Popular Destinations
+              li: a(href="/plan") Trip Planner
+
+          // Support
+          .footer-support
+            h3 Support
+            ul
+              li: a(href="#") Help Center
+              li: a(href="#") Contact Us
+              li: a(href="#") FAQ
+              li: a(href="#") Privacy Policy
+
+          // Contact Info
+          .footer-contact
+            h3 Contact
+            ul
+              li
+                i.icon-email
+                span support@travelwise.com
+              li
+                i.icon-phone
+                span +1 (555) 123-4567
+              li
+                i.icon-globe
+                span Available 24/7
+
+        // Bottom Footer Bar
+        .footer-bottom
+          p © 2024 TravelWise. All rights reserved.
+          .footer-policies
+            a(href="#") Terms of Service
+            a(href="#") Privacy Policy
+            a(href="#") Cookie Policy
+
+          script(src="/js/main.js")

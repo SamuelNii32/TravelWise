@@ -1,0 +1,203 @@
+extends layout
+
+block content
+  .details-page
+    .container
+      // Back to Results Header
+      .details-header
+        button.back-btn(onclick="handleBackToResults()")
+          i.fa-solid.fa-arrow-left
+          | Back to Results
+        .destination-title
+          span.flag= destination.flag
+          h1.title #{destination.name}, #{destination.country}
+
+      // Main Content Grid
+      .details-grid
+        // Left Column
+        .left-column
+          // Weather & Climate Card
+          .detail-card.weather-card
+            .card-header
+              i.fa-solid.fa-thermometer-half
+              h3 Weather & Climate
+            .card-content
+              .weather-display
+                .weather-icon ☀️
+                .weather-info
+                  .temperature #{destination.temperature}°C
+                  .condition= destination.weather
+              p.weather-description Perfect weather for outdoor activities and sightseeing. Pack light, breathable clothing.
+
+          // Currency & Costs Card
+          .detail-card.currency-card
+            .card-header
+              i.fa-solid.fa-dollar-sign
+              h3 Currency & Costs
+            .card-content
+              .cost-details
+                .cost-row
+                  span Currency:
+                  span.value= destination.currency
+                .cost-row
+                  span Exchange Rate:
+                  span.value 1 USD = #{destination.exchangeRate.toFixed(destination.currency === 'JPY' ? 0 : 2)} #{destination.currency}
+                .cost-row
+                  span Daily Budget:
+                  span.value.green $50-150
+                .cost-row
+                  span Meal Cost:
+                  span.value $10-30
+
+          // Location Card
+          .detail-card.location-card
+            .card-header
+              i.fa-solid.fa-map-pin
+              h3 Location
+            .card-content
+              .map-container(onclick="handleMapClick()")
+                .map-gradient
+                .map-pin-center
+                  i.fa-solid.fa-map-pin
+                .coordinates #{destination.coordinates.lat.toFixed(4)}, #{destination.coordinates.lng.toFixed(4)}
+              p.location-description Located in a prime area with easy access to major attractions and transportation. Click the map for more details.
+
+        // Right Column
+        .right-column
+          // Budget Breakdown Card
+          .detail-card.budget-card
+            .card-header
+              h3 Budget Breakdown
+            .card-content
+              .chart-container
+                canvas#detailsChart(width="300" height="200")
+              .budget-legend
+                each item in destination.budgetBreakdown
+                  .legend-item
+                    .legend-color(style=`background-color: ${item.color}`)
+                    span.legend-name= item.name
+                    span.legend-value #{item.value}%
+
+          // Top Attractions Card
+          .detail-card.attractions-card
+            .card-header
+              h3 Top Attractions
+            .card-content
+              .attractions-list
+                .attraction-item(onclick="handleAttractionClick('Historic Temple')")
+                  .attraction-icon.blue 🏛️
+                  .attraction-info
+                    .attraction-name Historic Temple
+                    .attraction-desc Ancient architecture and culture
+                .attraction-item(onclick="handleAttractionClick('Beautiful Beach')")
+                  .attraction-icon.green 🏖️
+                  .attraction-info
+                    .attraction-name Beautiful Beach
+                    .attraction-desc Crystal clear waters
+                .attraction-item(onclick="handleAttractionClick('Local Market')")
+                  .attraction-icon.orange 🍜
+                  .attraction-info
+                    .attraction-name Local Market
+                    .attraction-desc Authentic local cuisine
+
+          // Action Buttons
+          .action-buttons
+            button.btn-favorite(onclick="handleAddToFavorites()", data-destination-id=destination.id)
+              i.fa-solid.fa-heart
+              span Add to Favorites
+            button.btn-plan(onclick="handleStartPlanning()")
+              i.fa-solid.fa-calendar
+              span Start Planning Trip
+
+  // JavaScript for Details Page
+  script.
+    const destination = !{JSON.stringify(destination)};
+    
+    // Weather icon function
+    function getWeatherIcon(weather) {
+      const icons = {
+        'sunny': '☀️',
+        'cloudy': '☁️',
+        'partly-cloudy': '⛅',
+        'rainy': '🌧️',
+        'clear': '☀️'
+      };
+      return icons[weather] || '☀️';
+    }
+    
+    // Update weather icon dynamically
+    document.addEventListener('DOMContentLoaded', function() {
+      const weatherIcon = document.querySelector('.weather-icon');
+      if (weatherIcon) {
+        weatherIcon.textContent = getWeatherIcon(destination.weather);
+      }
+      
+      // Render budget chart
+      if (destination.budgetBreakdown && destination.budgetBreakdown.length > 0) {
+        const canvas = document.getElementById('detailsChart');
+        if (canvas) {
+          const ctx = canvas.getContext('2d');
+          new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: destination.budgetBreakdown.map(item => item.name),
+              datasets: [{
+                data: destination.budgetBreakdown.map(item => item.value),
+                backgroundColor: destination.budgetBreakdown.map(item => item.color),
+                borderWidth: 2,
+                borderColor: '#ffffff'
+              }]
+            },
+            options: {
+              responsive: false,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: false
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function(context) {
+                      return context.label + ': ' + context.parsed + '%';
+                    }
+                  }
+                }
+              }
+            }
+          });
+        }
+      }
+    });
+    
+    // Event handlers
+    function handleBackToResults() {
+      window.history.back();
+    }
+    
+    function handleMapClick() {
+      alert(`Interactive Map: ${destination.name} is located at ${destination.coordinates.lat.toFixed(4)}, ${destination.coordinates.lng.toFixed(4)}`);
+    }
+    
+    function handleAttractionClick(attraction) {
+      alert(`Learn more about ${attraction} in ${destination.name}`);
+    }
+    
+    function handleAddToFavorites() {
+      const btn = document.querySelector('.btn-favorite');
+      const icon = btn.querySelector('i');
+      const text = btn.querySelector('span');
+      
+      if (btn.classList.contains('favorited')) {
+        btn.classList.remove('favorited');
+        icon.className = 'fa-solid fa-heart';
+        text.textContent = 'Add to Favorites';
+      } else {
+        btn.classList.add('favorited');
+        icon.className = 'fa-solid fa-check';
+        text.textContent = 'Added to Favorites';
+      }
+    }
+    
+    function handleStartPlanning() {
+      alert(`Start planning your trip to ${destination.name}!`);
+    }
