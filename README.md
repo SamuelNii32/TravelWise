@@ -139,7 +139,7 @@ This project was developed for **HTTP5222 - Web Development** course, demonstrat
 
 **Developer**: Samuel Nii  
 **Course**: HTTP5222  
-**Institution**: [Your School Name]  
+**Institution**: Humber College
 **GitHub**: [@SamuelNii32](https://github.com/SamuelNii32)
 
 ---
